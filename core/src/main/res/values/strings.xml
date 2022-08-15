@@ -616,4 +616,8 @@
         <item quantity="other">%1$d minutes</item>
     </plurals>
 
+    // Eating Now
+    <string name="angel">Angel</string>
+    <string name="key_angel_duration" translatable="false">key_angel_angelwindowminutes</string>
+
 </resources>

@@ -1252,5 +1252,11 @@
     <string name="no_watch_connected">(No Watch Connected)</string>
     <string name="error_asking_for_permissions">Error asking for permissions</string>
 
+    <!-- Angel-->
+    <string name="description_Angel">Angel Plugin</string>
+    <string name="Angel">Angel</string>
+    <string name="Angel_shortname">Angel</string>
+    <string name="pref_angel">Angel</string>
+    <string name="key_use_angel">key_use_angel</string>
 
 </resources>

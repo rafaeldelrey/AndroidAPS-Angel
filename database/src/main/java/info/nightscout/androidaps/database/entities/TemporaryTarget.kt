@@ -71,6 +71,8 @@ data class TemporaryTarget(
         ACTIVITY("Activity"),
         @SerializedName("Eating Soon")
         EATING_SOON("Eating Soon"),
+        @SerializedName("Angel")
+        ANGEL("Angel"),
         @SerializedName("Automation")
         AUTOMATION("Automation"),
         @SerializedName("Wear")

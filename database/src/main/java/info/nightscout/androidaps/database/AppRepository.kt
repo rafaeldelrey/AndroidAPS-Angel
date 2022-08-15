@@ -149,6 +149,17 @@ import kotlin.math.roundToInt
             .map { if (!ascending) it.reversed() else it }
             .subscribeOn(Schedulers.io())
 
+    // Angel: Get the first Angel TT since Angel start time
+    fun getAngelTemporaryTargetDataFromTime(timestamp: Long, ascending: Boolean): Single<List<TemporaryTarget>> =
+        database.temporaryTargetDao.getAngelTemporaryTargetDataFromTime(timestamp, TemporaryTarget.Reason.ANGEL)
+            .map { if (!ascending) it.reversed() else it }
+            .subscribeOn(Schedulers.io())
+
+    // Angel: Get the Angel TT at this time
+    fun getAngelTemporaryTargetActiveAt(timestamp: Long): Single<List<TemporaryTarget>> =
+        database.temporaryTargetDao.getAngelTemporaryTargetActiveAt(timestamp,TemporaryTarget.Reason.ANGEL)
+            .subscribeOn(Schedulers.io())
+
     fun getTemporaryTargetDataIncludingInvalidFromTime(timestamp: Long, ascending: Boolean): Single<List<TemporaryTarget>> =
         database.temporaryTargetDao.getTemporaryTargetDataIncludingInvalidFromTime(timestamp)
             .map { if (!ascending) it.reversed() else it }

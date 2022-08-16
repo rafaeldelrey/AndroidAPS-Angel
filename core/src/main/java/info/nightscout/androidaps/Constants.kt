@@ -42,7 +42,7 @@ object Constants {
     const val defaultEatingSoonTTmgdl = 90.0
     const val defaultEatingSoonTTmmol = 5.0
     const val defaultAngelTTDuration = 30 // min
-    const val MAX_AngelTT_DURATION = 120.0
+    const val MAX_ANGELTT_DURATION = 120.0
     const val defaultHypoTTDuration = 60 // min
     const val defaultHypoTTmgdl = 160.0
     const val defaultHypoTTmmol = 8.0

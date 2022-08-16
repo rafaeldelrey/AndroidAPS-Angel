@@ -53,7 +53,7 @@ class AngelPlugin @Inject constructor(
         .pluginIcon(R.drawable.ic_generic_icon)
         .pluginName(R.string.Angel)
         .shortName(R.string.Angel_shortname)
-        .preferencesId(R.xml.pref_eatingnow)
+        .preferencesId(R.xml.pref_angel)
         .description(R.string.description_Angel),
     aapsLogger, rh, injector
 ), APS, Constraints {

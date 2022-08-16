@@ -32,7 +32,7 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
-                android:text="Eating Now"
+                android:text="@string/Angel"
                 android:textAlignment="center"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 

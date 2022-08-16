@@ -19,7 +19,7 @@ import info.nightscout.androidaps.database.entities.UserEntry.Action
 import info.nightscout.androidaps.database.entities.UserEntry.Sources
 import info.nightscout.androidaps.database.transactions.CancelCurrentTemporaryTargetIfAnyTransaction
 import info.nightscout.androidaps.database.transactions.InsertAndCancelCurrentTemporaryTargetTransaction
-import info.nightscout.androidaps.databinding.DialogEnTemptargetBinding
+import info.nightscout.androidaps.databinding.DialogAngelTemptargetBinding
 import info.nightscout.androidaps.interfaces.GlucoseUnit
 import info.nightscout.androidaps.interfaces.ProfileFunction
 import info.nightscout.shared.logging.LTag
@@ -54,7 +54,7 @@ class AngelTempTargetDialog : DialogFragmentWithDate() {
 
     private var queryingProtection = false
     private val disposable = CompositeDisposable()
-    private var _binding: DialogEnTemptargetBinding? = null
+    private var _binding: DialogAngelTemptargetBinding? = null
 
     // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
@@ -67,7 +67,7 @@ class AngelTempTargetDialog : DialogFragmentWithDate() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         onCreateViewGeneral()
-        _binding = DialogEnTemptargetBinding.inflate(inflater, container, false)
+        _binding = DialogAngelTemptargetBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -81,7 +81,7 @@ class AngelTempTargetDialog : DialogFragmentWithDate() {
         val enTT = Profile.toCurrentUnits(units,profileFunction.getProfile()!!.getTargetMgdl())
 
         binding.duration.setParams(savedInstanceState?.getDouble("duration")
-            ?: 0.0, 0.0, Constants.MAX_ENTT_DURATION, 10.0, DecimalFormat("0"), false, binding.okcancel.ok)
+            ?: 0.0, 0.0, Constants.MAX_ANGELTT_DURATION, 10.0, DecimalFormat("0"), false, binding.okcancel.ok)
 
         if (profileFunction.getUnits() == GlucoseUnit.MMOL)
             binding.temptarget.setParams(
@@ -104,7 +104,7 @@ class AngelTempTargetDialog : DialogFragmentWithDate() {
             reasonList = Lists.newArrayList(
                 rh.gs(R.string.manual),
                 rh.gs(R.string.eatingsoon),
-                rh.gs(R.string.eatingnow),
+                rh.gs(R.string.angel),
                 rh.gs(R.string.activity),
                 rh.gs(R.string.hypo)
             )
@@ -133,8 +133,8 @@ class AngelTempTargetDialog : DialogFragmentWithDate() {
 
         // reset to Eating Now defaults
         //binding.temptarget.value = Profile.toCurrentUnits(units,profileFunction.getProfile()!!.getTargetMgdl())
-        binding.duration.value = defaultValueHelper.determineEatingNowTTDuration().toDouble()
-        binding.reasonList.setText(rh.gs(R.string.eatingnow), false)
+        binding.duration.value = defaultValueHelper.determineAngelTTDuration().toDouble()
+        binding.reasonList.setText(rh.gs(R.string.angel), false)
     }
 
     private fun shortClick(v: View) {
@@ -192,7 +192,9 @@ class AngelTempTargetDialog : DialogFragmentWithDate() {
             OKDialog.showConfirmation(activity, rh.gs(R.string.careportal_temporarytarget), HtmlHelper.fromHtml(Joiner.on("<br/>").join(actions)), {
                 val units = profileFunction.getUnits()
                 when(reason) {
-                    rh.gs(R.string.eatingnow)      -> uel.log(Action.TT, Sources.TTDialog, ValueWithUnit.Timestamp(eventTime).takeIf { eventTimeChanged }, ValueWithUnit.TherapyEventTTReason(TemporaryTarget.Reason.EATING_NOW), ValueWithUnit.fromGlucoseUnit(target, units.asText), ValueWithUnit.Minute(duration))
+                    rh.gs(R.string.angel)      -> uel.log(Action.TT, Sources.TTDialog, ValueWithUnit
+                        .Timestamp(eventTime).takeIf { eventTimeChanged }, ValueWithUnit.TherapyEventTTReason(TemporaryTarget.Reason.ANGEL), ValueWithUnit.fromGlucoseUnit(target, units.asText),
+                                                          ValueWithUnit.Minute(duration))
                     rh.gs(R.string.eatingsoon)      -> uel.log(Action.TT, Sources.TTDialog, ValueWithUnit.Timestamp(eventTime).takeIf { eventTimeChanged }, ValueWithUnit.TherapyEventTTReason(TemporaryTarget.Reason.EATING_SOON), ValueWithUnit.fromGlucoseUnit(target, units.asText), ValueWithUnit.Minute(duration))
                     rh.gs(R.string.activity)        -> uel.log(Action.TT, Sources.TTDialog, ValueWithUnit.Timestamp(eventTime).takeIf { eventTimeChanged }, ValueWithUnit.TherapyEventTTReason(TemporaryTarget.Reason.ACTIVITY), ValueWithUnit.fromGlucoseUnit(target, units.asText), ValueWithUnit.Minute(duration))
                     rh.gs(R.string.hypo)            -> uel.log(Action.TT, Sources.TTDialog, ValueWithUnit.Timestamp(eventTime).takeIf { eventTimeChanged }, ValueWithUnit.TherapyEventTTReason(TemporaryTarget.Reason.HYPOGLYCEMIA), ValueWithUnit.fromGlucoseUnit(target, units.asText), ValueWithUnit.Minute(duration))
@@ -211,7 +213,7 @@ class AngelTempTargetDialog : DialogFragmentWithDate() {
                         timestamp = eventTime,
                         duration = TimeUnit.MINUTES.toMillis(duration.toLong()),
                         reason = when (reason) {
-                            rh.gs(R.string.eatingnow) -> TemporaryTarget.Reason.EATING_NOW
+                            rh.gs(R.string.angel) -> TemporaryTarget.Reason.ANGEL
                             rh.gs(R.string.eatingsoon) -> TemporaryTarget.Reason.EATING_SOON
                             rh.gs(R.string.activity)   -> TemporaryTarget.Reason.ACTIVITY
                             rh.gs(R.string.hypo)       -> TemporaryTarget.Reason.HYPOGLYCEMIA

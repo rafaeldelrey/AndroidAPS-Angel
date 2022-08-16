@@ -203,7 +203,7 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
         binding.buttonsLayout.cgmButton.setOnClickListener(this)
         binding.buttonsLayout.insulinButton.setOnClickListener(this)
         binding.buttonsLayout.carbsButton.setOnClickListener(this)
-        binding.buttonsLayout.enButton.setOnClickListener(this)
+        binding.buttonsLayout.angelButton.setOnClickListener(this)
         binding.buttonsLayout.quickWizardButton.setOnClickListener(this)
         binding.buttonsLayout.quickWizardButton.setOnLongClickListener(this)
         binding.infoLayout.apsMode.setOnClickListener(this)
@@ -360,7 +360,7 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
                     activity,
                     ProtectionCheck.Protection.BOLUS,
                     UIRunnable { if (isAdded) CarbsDialog().show(childFragmentManager, "Overview") })
-                R.id.en_button        -> protectionCheck.queryProtection(
+                R.id.angel_button        -> protectionCheck.queryProtection(
                     activity,
                     ProtectionCheck.Protection.BOLUS,
                     UIRunnable { AngelTempTargetDialog().show(childFragmentManager, "Overview") })
@@ -955,7 +955,7 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
     fun updateTemporaryTarget() {
         val units = profileFunction.getUnits()
         val tempTarget = overviewData.temporaryTarget
-        val AngelTTtext = if (tempTarget?.reason == TemporaryTarget.Reason.EATING_NOW) "EATING NOW " else ""
+        val AngelTTtext = if (tempTarget?.reason == TemporaryTarget.Reason.ANGEL) "Angel " else ""
 
         runOnUiThread {
             _binding ?: return@runOnUiThread

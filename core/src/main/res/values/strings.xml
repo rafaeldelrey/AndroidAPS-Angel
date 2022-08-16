@@ -618,6 +618,7 @@
 
     // Eating Now
     <string name="angel">Angel</string>
-    <string name="key_angel_duration" translatable="false">key_angel_angelwindowminutes</string>
+    <!--    <string name="key_eatingnow_duration" translatable="false">eatingnow_duration</string>-->
+    <string name="key_eatingnow_duration" translatable="false">key_eatingnow_enwindowminutes</string>
 
 </resources>

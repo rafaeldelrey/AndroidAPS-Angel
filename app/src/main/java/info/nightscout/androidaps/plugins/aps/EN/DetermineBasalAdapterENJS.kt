@@ -203,32 +203,32 @@ class DetermineBasalAdapterAngelJS internal constructor(private val scriptReader
         // this.profile.put("low_temptarget_lowers_sensitivity", false)
         this.profile.put("sensitivity_raises_target", sp.getBoolean(R.string.key_sensitivity_raises_target, AngelDefaults.sensitivity_raises_target))
         this.profile.put("resistance_lowers_target", sp.getBoolean(R.string.key_resistance_lowers_target, AngelDefaults.resistance_lowers_target))
-        this.profile.put("adv_target_adjustments", ENDefaults.adv_target_adjustments)
-        this.profile.put("exercise_mode", ENDefaults.exercise_mode)
-        this.profile.put("half_basal_exercise_target", ENDefaults.half_basal_exercise_target)
-        this.profile.put("maxCOB", ENDefaults.maxCOB)
+        this.profile.put("adv_target_adjustments", AngelDefaults.adv_target_adjustments)
+        this.profile.put("exercise_mode", AngelDefaults.exercise_mode)
+        this.profile.put("half_basal_exercise_target", AngelDefaults.half_basal_exercise_target)
+        this.profile.put("maxCOB", AngelDefaults.maxCOB)
         this.profile.put("skip_neutral_temps", pump.setNeutralTempAtFullHour())
         // min_5m_carbimpact is not used within SMB determinebasal
         //if (mealData.usedMinCarbsImpact > 0) {
         //    mProfile.put("min_5m_carbimpact", mealData.usedMinCarbsImpact);
         //} else {
-        //    mProfile.put("min_5m_carbimpact", SP.getDouble(R.string.key_openapsama_min_5m_carbimpact, ENDefaults.min_5m_carbimpact));
+        //    mProfile.put("min_5m_carbimpact", SP.getDouble(R.string.key_openapsama_min_5m_carbimpact, AngelDefaults.min_5m_carbimpact));
         //}
-        this.profile.put("remainingCarbsCap", ENDefaults.remainingCarbsCap)
+        this.profile.put("remainingCarbsCap", AngelDefaults.remainingCarbsCap)
         this.profile.put("enableUAM", uamAllowed)
-        this.profile.put("A52_risk_enable", ENDefaults.A52_risk_enable)
+        this.profile.put("A52_risk_enable", AngelDefaults.A52_risk_enable)
         val smbEnabled = sp.getBoolean(R.string.key_use_smb, false)
-        this.profile.put("SMBInterval", sp.getInt(R.string.key_smbinterval, ENDefaults.SMBInterval))
+        this.profile.put("SMBInterval", sp.getInt(R.string.key_smbinterval, AngelDefaults.SMBInterval))
         this.profile.put("enableSMB_with_COB", smbEnabled && sp.getBoolean(R.string.key_enableSMB_with_COB, false))
         this.profile.put("enableSMB_with_temptarget", smbEnabled && sp.getBoolean(R.string.key_enableSMB_with_temptarget, false))
         this.profile.put("allowSMB_with_high_temptarget", smbEnabled && sp.getBoolean(R.string.key_allowSMB_with_high_temptarget, false))
         this.profile.put("enableSMB_always", smbEnabled && sp.getBoolean(R.string.key_enableSMB_always, false) && advancedFiltering)
         this.profile.put("enableSMB_after_carbs", smbEnabled && sp.getBoolean(R.string.key_enableSMB_after_carbs, false) && advancedFiltering)
-        this.profile.put("maxSMBBasalMinutes", sp.getInt(R.string.key_smbmaxminutes, ENDefaults.maxSMBBasalMinutes))
-        this.profile.put("maxUAMSMBBasalMinutes", sp.getInt(R.string.key_uamsmbmaxminutes, ENDefaults.maxUAMSMBBasalMinutes))
+        this.profile.put("maxSMBBasalMinutes", sp.getInt(R.string.key_smbmaxminutes, AngelDefaults.maxSMBBasalMinutes))
+        this.profile.put("maxUAMSMBBasalMinutes", sp.getInt(R.string.key_uamsmbmaxminutes, AngelDefaults.maxUAMSMBBasalMinutes))
         //set the min SMB amount to be the amount set by the pump.
         this.profile.put("bolus_increment", pumpBolusStep)
-        this.profile.put("carbsReqThreshold", sp.getInt(R.string.key_carbsReqThreshold, ENDefaults.carbsReqThreshold))
+        this.profile.put("carbsReqThreshold", sp.getInt(R.string.key_carbsReqThreshold, AngelDefaults.carbsReqThreshold))
         this.profile.put("current_basal", basalRate)
         this.profile.put("temptargetSet", tempTargetSet)
         this.profile.put("use_autosens", sp.getBoolean(R.string.key_openapsama_useautosens, false))
@@ -236,39 +236,6 @@ class DetermineBasalAdapterAngelJS internal constructor(private val scriptReader
         this.profile.put("autosens_min", SafeParse.stringToDouble(sp.getString(R.string.key_openapsama_autosens_min, "0.8")))
         this.profile.put("autosens_max", SafeParse.stringToDouble(sp.getString(R.string.key_openapsama_autosens_max, "1.2")))
 //**********************************************************************************************************************************************
-        // patches ==== START
-        this.profile.put("EatingNowTimeStart", sp.getInt(R.string.key_eatingnow_timestart, 9))
-        this.profile.put("EatingNowTimeEnd", sp.getInt(R.string.key_eatingnow_timeend, 17))
-        this.profile.put("normal_target_bg", profile.getTargetMgdl().roundToInt())
-        this.profile.put("enableGhostCOB", sp.getBoolean(R.string.key_use_ghostcob, false))
-        //this.profile.put("COBWindow", sp.getInt(R.string.key_eatingnow_cobboostminutes, 0))
-
-        // Within the EN Window ********************************************************************************
-        this.profile.put("ENWindow", sp.getInt(R.string.key_eatingnow_enwindowminutes, 0))
-        this.profile.put("ENWIOBTrigger", sp.getDouble(R.string.key_enwindowiob, 0.0))
-        val enwMinBolus = sp.getDouble(R.string.key_enwminbolus, 0.0)
-        this.profile.put("ENWMinBolus", enwMinBolus)
-        this.profile.put("ENautostart", sp.getBoolean(R.string.key_enautostart, false))
-
-        // Breakfast / first meal
-        this.profile.put("ENBkfstWindow", sp.getInt(R.string.key_enbkfstwindowminutes, 0))
-        this.profile.put("BreakfastPct", sp.getInt(R.string.key_eatingnow_breakfastpct, 100))
-        this.profile.put("Win_COB_maxBolus_breakfast", sp.getDouble(R.string.key_eatingnow_cobboost_maxbolus_breakfast, 0.0))
-        this.profile.put("Win_UAM_maxBolus_breakfast", sp.getDouble(R.string.key_eatingnow_uam_maxbolus_breakfast, 0.0))
-        // other meals
-        this.profile.put("Win_COB_maxBolus", sp.getDouble(R.string.key_eatingnow_cobboost_maxbolus, 0.0))
-        this.profile.put("Win_UAM_maxBolus", sp.getDouble(R.string.key_eatingnow_uamboost_maxbolus, 0.0))
-
-        // Outside of the EN Window ********************************************************************************
-        this.profile.put("COB_maxBolus", sp.getDouble(R.string.key_eatingnow_isfboost_maxbolus, 0.0))
-        this.profile.put("UAM_maxBolus", sp.getDouble(R.string.key_eatingnow_uam_maxbolus, 0.0))
-
-        this.profile.put("SMBbgOffset", Profile.toMgdl(sp.getDouble(R.string.key_eatingnow_smbbgoffset, 0.0),profileFunction.getUnits()))
-        this.profile.put("ISFbgscaler", sp.getDouble(R.string.key_eatingnow_isfbgscaler, 0.0))
-        this.profile.put("MaxISFpct", sp.getInt(R.string.key_eatingnow_maxisfpct, 100))
-        this.profile.put("enableSRTDD", sp.getBoolean(R.string.key_use_sr_tdd, false))
-        this.profile.put("useDynISF", sp.getBoolean(R.string.key_use_dynamicISF, true))
-
         this.profile.put("insulinType", activePlugin.activeInsulin.friendlyName)
         this.profile.put("insulinPeak", activePlugin.activeInsulin.insulinConfiguration.peak/60000)
         // patches ==== END
@@ -302,72 +269,6 @@ class DetermineBasalAdapterAngelJS internal constructor(private val scriptReader
         this.mealData.put("slopeFromMinDeviation", mealData.slopeFromMinDeviation)
         this.mealData.put("lastBolusTime", mealData.lastBolusTime)
         this.mealData.put("lastCarbTime", mealData.lastCarbTime)
-
-        // get the last carb time for EN activation
-        val getlastCarbs = repository.getLastCarbsRecordWrapped().blockingGet()
-        val lastCarbTime = if (getlastCarbs is ValueWrapper.Existing) getlastCarbs.value.timestamp else 0L
-        this.mealData.put("lastNormalCarbTime", lastCarbTime)
-
-        // get the first carb time since EN activation
-        val ENStartTime = 3600000 * sp.getInt(R.string.key_eatingnow_timestart, 9) + MidnightTime.calc(now)
-        val getCarbsSinceENStart = repository.getCarbsDataFromTime(ENStartTime,true).blockingGet()
-        val firstCarbTime = getCarbsSinceENStart.lastOrNull()?.timestamp
-        this.mealData.put("firstCarbTime",firstCarbTime)
-
-        // get the FIRST bolus time since EN activation
-        val firstENBolusTime = repository.getENBolusFromTimeOfType(ENStartTime,true, Bolus.Type.NORMAL, enwMinBolus ).blockingGet().lastOrNull()?.timestamp
-        val firstENBolusUnits = repository.getENBolusFromTimeOfType(ENStartTime,true, Bolus.Type.NORMAL, enwMinBolus ).blockingGet().lastOrNull()?.amount
-        this.mealData.put("firstENBolusTime",firstENBolusTime)
-        this.mealData.put("firstENBolusUnits",firstENBolusUnits)
-
-        // get the FIRST EN TT time since EN activation
-        val firstENTempTargetTime = repository.getENTemporaryTargetDataFromTime(ENStartTime,true).blockingGet().lastOrNull()?.timestamp
-        this.mealData.put("firstENTempTargetTime",firstENTempTargetTime)
-
-        // get the current EN TT info
-        val activeENTempTargetStartTime = repository.getENTemporaryTargetActiveAt(now).blockingGet().lastOrNull()?.timestamp
-        this.mealData.put("activeENTempTargetStartTime",activeENTempTargetStartTime)
-        val activeENTempTargetDuration = repository.getENTemporaryTargetActiveAt(now).blockingGet().lastOrNull()?.duration
-        if (activeENTempTargetDuration != null) {
-            this.mealData.put("activeENTempTargetDuration",activeENTempTargetDuration/60000)
-        }
-
-        // get the LAST bolus time since EN activation
-        val lastENBolusTime = repository.getENBolusFromTimeOfType(ENStartTime,false, Bolus.Type.NORMAL, enwMinBolus ).blockingGet().lastOrNull()?.timestamp
-        val lastENBolusUnits = repository.getENBolusFromTimeOfType(ENStartTime,false, Bolus.Type.NORMAL, enwMinBolus ).blockingGet().lastOrNull()?.amount
-        this.mealData.put("lastENBolusTime",lastENBolusTime)
-        this.mealData.put("lastENBolusUnits",lastENBolusUnits)
-
-        // 3PM is used as a low basal point at which the rest of the day leverages for ISF variance when using one ISF in the profile
-        this.profile.put("enableBasalAt3PM", sp.getBoolean(R.string.key_use_3pm_basal, false))
-        this.profile.put("BasalAt3PM", profile.getBasal(3600000*15+MidnightTime.calc(now)))
-
-        // TDD
-        this.mealData.put("TDDAvg1d", tddCalculator.averageTDD(tddCalculator.calculate(1))?.totalAmount)
-        this.mealData.put("TDDAvg7d", tddCalculator.averageTDD(tddCalculator.calculate(7))?.totalAmount)
-        this.mealData.put("TDDLast4h", tddCalculator.calculateDaily(-4, 0).totalAmount)
-        this.mealData.put("TDDLast8h", tddCalculator.calculateDaily(-8, 0).totalAmount)
-        this.mealData.put("TDDLast8hfor4h", tddCalculator.calculateDaily(-8,-4).totalAmount)
-
-        // Override profile ISF with TDD ISF if selected in prefs
-        this.profile.put("use_sens_TDD", sp.getBoolean(R.string.key_use_sens_tdd, false))
-        this.profile.put("sens_TDD_scale",SafeParse.stringToDouble(sp.getString(R.string.key_sens_tdd_scale,"100")))
-
-        // TIR Windows - 4 hours prior to current time // 4.0 - 10.0
-        // this.mealData.put("TIRW4H",tirCalculator.averageTIR(tirCalculator.calculateHoursPrior(4,3,72.0, 180.0)).abovePct())
-        // this.mealData.put("TIRW3H",tirCalculator.averageTIR(tirCalculator.calculateHoursPrior(3,2,72.0, 180.0)).abovePct())
-        // this.mealData.put("TIRW2H",tirCalculator.averageTIR(tirCalculator.calculateHoursPrior(2,1,72.0, 180.0)).abovePct())
-        // this.mealData.put("TIRW1H",tirCalculator.averageTIR(tirCalculator.calculateHoursPrior(1,0,72.0, 180.0)).abovePct())
-        //
-        // this.mealData.put("TIRW4",tirCalculator.averageTIR(tirCalculator.calculateHoursPrior(4,3,72.0, 180.0)).inRangePct())
-        // this.mealData.put("TIRW3",tirCalculator.averageTIR(tirCalculator.calculateHoursPrior(3,2,72.0, 180.0)).inRangePct())
-        // this.mealData.put("TIRW2",tirCalculator.averageTIR(tirCalculator.calculateHoursPrior(2,1,72.0, 180.0)).inRangePct())
-        // this.mealData.put("TIRW1",tirCalculator.averageTIR(tirCalculator.calculateHoursPrior(1,0,72.0, 180.0)).inRangePct())
-        //
-        // this.mealData.put("TIRW4L",tirCalculator.averageTIR(tirCalculator.calculateHoursPrior(4,3,72.0, 180.0)).belowPct())
-        // this.mealData.put("TIRW3L",tirCalculator.averageTIR(tirCalculator.calculateHoursPrior(3,2,72.0, 180.0)).belowPct())
-        // this.mealData.put("TIRW2L",tirCalculator.averageTIR(tirCalculator.calculateHoursPrior(2,1,72.0, 180.0)).belowPct())
-        // this.mealData.put("TIRW1L",tirCalculator.averageTIR(tirCalculator.calculateHoursPrior(1,0,72.0, 180.0)).belowPct())
 
         if (constraintChecker.isAutosensModeEnabled().value()) {
             autosensData.put("ratio", autosensDataRatio)
